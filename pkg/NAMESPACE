@@ -1,0 +1,3 @@
+export("vGWAS","plot.vGWAS","vGWAS.heritability","brown.forsythe.test")
+
+S3method(plot,vGWAS)
