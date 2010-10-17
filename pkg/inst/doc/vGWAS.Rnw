@@ -1,0 +1,16 @@
+% $Id: vGWAS.Rnw $
+
+%\VignetteIndexEntry{The vGWAS Package}
+%\VignetteKeywords{vGWAS}
+%\VignettePackage{vGWAS}
+
+\documentclass{article}
+
+\usepackage{pdfpages}
+
+\begin{document}
+
+\includepdf[pages={1-15}, fitpaper=true]{Tutorial.pdf}
+
+\end{document}
+
