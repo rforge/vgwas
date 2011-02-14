@@ -5,17 +5,17 @@
 Variance Genome-wide Association
 }
 \description{
-The package provides functions for genome-wide association using nonparametric variance test and some other further visualization and calculation. 
+The package provides models and tests for variance genome-wide association study (vGWAS).
 }
 \details{
 \tabular{ll}{
 Package: \tab vGWAS\cr
 Type: \tab Package\cr
-Version: \tab 2010.10.12\cr
-Date: \tab 2010-10-12\cr
+Version: \tab 2011.02.14\cr
+Date: \tab 2011-02-14\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
-Depends: \tab dglm\cr
+Depends: \tab hglm, dglm\cr
 }
 }
 \author{
@@ -24,9 +24,17 @@ Xia Shen
 Maintainer: Xia Shen <xia.shen@lcb.uu.se>
 }
 \references{
-Shen et al. (2010)
+Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Variance Controlling Genes: Significant Contributors to The Missing Genetic Variation for Complex Traits}. \emph{Submitted}.\cr
+
+Ronnegard, L., Shen, X. and Alam, M. (2011): \bold{hglm: A Package for Fitting Hierarchical Generalized Linear Models}. \emph{The R Journal}, \bold{2}(2), 20-28.\cr
+
+Brown, M. B. and Forsythe, A.B. (1974). \bold{Robust tests for equality of 
+variances.} \emph{Journal of the American Statistical Association}, \bold{69}, 364-367.\cr
+
+Levene, H. (1960). \bold{Robust Tests for Equality of Variances}, \emph{in Contributions 
+to Probability and Statistics}, ed. I. Olkin, Palo Alto, CA: Stanford Univ. Press.\cr
 }
 \keyword{GWAS}
 \seealso{
-package \code{lawstat} for other types of nonparametric variance tests.
+R package \code{lawstat} for other types of nonparametric variance tests.
 }

@@ -1,11 +1,11 @@
 Package: vGWAS
 Type: Package
 Title: Variance Genome-wide Association
-Version: 2010.10.12
-Date: 2010-10-12
+Version: 2011.02.14
+Date: 2011-02-14
 Author: Xia Shen
 Maintainer: Xia Shen <xia.shen@lcb.uu.se>
-Description: The package provides functions for genome-wide association using nonparametric variance test and some other further visualization and calculation. 
+Description: The package provides models and tests for variance genome-wide association study (vGWAS). 
 License: GPL
 LazyLoad: yes
-Depends: dglm
+Depends: hglm, dglm

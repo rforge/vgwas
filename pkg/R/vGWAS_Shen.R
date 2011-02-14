@@ -49,17 +49,24 @@ function(y, group, kruskal.test = FALSE)
 
 
 
-`vGWAS` <- 
-function(phenotype, geno.matrix, kruskal.test = FALSE, marker.map = NULL, chr.index = NULL)
+`vGWAS` <-
+function(phenotype, geno.matrix, heva = FALSE, kinship = NULL, kruskal.test = FALSE, marker.map = NULL, chr.index = NULL)
 {
  Call <- match.call()
- n <- length(phenotype)
- m <- ncol(geno.matrix)
  # ----- check phenotype ----- #
  if (!is.numeric(phenotype) & !is.logical(phenotype))
  {
   stop('phenotype has to be numeric or logical.')
  }
+ if (heva) 
+ {
+  cat('correcting phenotype using HEVA ...\n')
+  if (is.numeric(phenotype)) family <- gaussian() else family <- binomial()
+  phenotype <- vGWAS.heva(phenotype, geno.matrix, kinship, family = family)$corrected.phenotype
+  cat('phenotype corrected.\n')
+ }
+ n <- length(phenotype)
+ m <- ncol(geno.matrix)
  # ----- check genotypes ----- #
  if (!is.matrix(geno.matrix) & !is.data.frame(geno.matrix))
  {
@@ -126,6 +133,78 @@ function(phenotype, geno.matrix, kruskal.test = FALSE, marker.map = NULL, chr.in
 
 
 
+`vGWAS.heva` <-
+function(phenotype, geno.matrix = NULL, kinship = NULL, family = gaussian())
+{
+ n <- length(phenotype)
+ if (is.null(geno.matrix) & is.null(kinship)) 
+ {
+  stop('at least one of geno.matrix or kinship has to be given.')
+ }
+ # ----- check phenotype ----- #
+ if (!is.numeric(phenotype) & !is.logical(phenotype))
+ {
+  stop('phenotype has to be numeric or logical.')
+ }
+ # ----- check genotypes or kinship ----- #
+ if (is.null(kinship)) 
+ {
+  if (!is.matrix(geno.matrix) & !is.data.frame(geno.matrix))
+  {
+   stop('geno.matrix has to be a matrix or a data frame.')
+  }
+ }
+ else
+ {
+  if (!is.matrix(kinship))
+  {
+   stop('kinship has to be a matrix.')
+  }
+ }
+ # ----- check if data sizes match ----- #
+ if (is.null(kinship)) 
+ {
+  if (n != nrow(geno.matrix))
+  {
+   stop('size of phenotype and geno.matrix do not match.')
+  }
+ }
+ else 
+ {
+  if (n != nrow(kinship))
+  {
+   stop('size of phenotype and kinship do not match.')
+  }
+ }
+ if (is.null(kinship)) 
+ {
+  cat('creating genomic kinship ... ')
+  G <- tcrossprod(geno.matrix)
+  cat('done.\n')
+ }
+ else 
+ {
+  G <- kinship
+ }
+ if (sum(is.na(phenotype)) > 0)
+ {
+  naidx <- which(is.na(phenotype))
+  phenotype <- phenotype[-naidx]
+  G <- G[-naidx,-naidx]
+ }
+ pc <- eigen(G)$vectors
+ plot(pc[,1], pc[,2], xlab = '1st Principle Component', ylab = '2nd Principle Component', pch = 16, cex = .84, col = 'DarkBlue')
+ cat('an HGLM is being fitted ... ')
+ L <- t(chol(G))
+ hm <- hglm(y = phenotype, X = matrix(1, length(phenotype), 1), Z = L, family = family)
+ cat('done.\n')
+ return(list(corrected.phenotype = hm$resid))
+}
+
+
+
+
+
 `plot.vGWAS` <-
 function(x, sig.threshold = NULL, low.log.p = 0, pch = 16, cex = .6, col.manhattan = c('slateblue4', 'olivedrab'), col.sig.threshold = 'darkgoldenrod', ...)
 {
@@ -174,7 +253,7 @@ function(x, sig.threshold = NULL, low.log.p = 0, pch = 16, cex = .6, col.manhatt
 
 
 
-`vGWAS.heritability` <- 
+`vGWAS.variance` <-
 function(phenotype, marker.genotype, only.print = TRUE)
 {
  # ----- check phenotype ----- #
@@ -195,14 +274,15 @@ function(phenotype, marker.genotype, only.print = TRUE)
  dm <- dglm(phenotype ~ as.factor(marker.genotype), ~ as.factor(marker.genotype))
  heritability.mean <- (dm$null.deviance - dm$deviance)/dm$null.deviance
  heritability.disp <- (dm$dispersion.fit$null.deviance - dm$dispersion.fit$deviance)/dm$dispersion.fit$null.deviance
- cat('heritability explained by the mean part of model:\n')
+ cat('variance explained by the mean part of model:\n')
  cat(round(heritability.mean*100, digits = 2), '%\n')
- cat('heritability explained by the variance part of model:\n')
+ cat('variance explained by the variance part of model:\n')
  cat(round(heritability.disp*100, digits = 2), '%\n')
- cat('heritability in total:\n')
+ cat('variance explained in total:\n')
  cat(round((heritability.mean + heritability.disp)*100, digits = 2), '%\n')
- if (!only.print) return(list(heritability.mean = heritability.mean, heritability.disp = heritability.disp))
+ if (!only.print) return(list(variance.mean = heritability.mean, variance.disp = heritability.disp))
 }
+
 
 
 
@@ -212,6 +292,6 @@ function(phenotype, marker.genotype, only.print = TRUE)
 function(...)
 {
  cat("vGWAS: Variance Genome-wide Association\n")
- cat('Version 2010.10.12 installed\n')
+ cat('Version 2011.02.14 installed\n')
  cat('Correspondence to: Xia Shen (xia.shen@lcb.uu.se)\n')
 }

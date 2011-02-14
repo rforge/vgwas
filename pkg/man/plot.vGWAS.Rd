@@ -41,7 +41,7 @@ not used.
 a plot for viewing vGWAS result.
 }
 \references{
-Shen et al. (2010)
+Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Variance Controlling Genes: Significant Contributors to The Missing Genetic Variation for Complex Traits}. \emph{Submitted}.
 }
 \author{
 Xia Shen
@@ -68,10 +68,16 @@ vgwa <- vGWAS(phenotype = pheno, geno.matrix = geno,
 
 plot(vgwa)
 
-# ----- calculate the heritability of strongest the marker ----- #
+# ----- calculate the variance explained by strongest the marker ----- #
 
 vGWAS.heritability(phenotype = pheno, 
                    marker.genotype = geno[,vgwa$p.value == min(vgwa$p.value)])
                    
+# ----- vGWAS via HEVA ----- #
+ 
+vgwa2 <- vGWAS(phenotype = pheno, geno.matrix = geno, heva = TRUE,
+              marker.map = map, chr.index = chr)
+              
+plot(vgwa2) 
 }
 }
