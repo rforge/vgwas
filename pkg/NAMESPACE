@@ -1,3 +1,3 @@
-export("vGWAS","plot.vGWAS","vGWAS.variance","vGWAS.heva","brown.forsythe.test")
+export("vGWAS","plot.vGWAS","vGWAS.variance","vGWAS.gc","brown.forsythe.test")
 
 S3method(plot,vGWAS)

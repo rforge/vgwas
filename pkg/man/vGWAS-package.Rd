@@ -7,12 +7,11 @@ Variance Genome-wide Association
 \description{
 The package provides models and tests for variance genome-wide association study (vGWAS).
 }
-\details{
-\tabular{ll}{
+\details{\tabular{ll}{
 Package: \tab vGWAS\cr
 Type: \tab Package\cr
-Version: \tab 2011.02.14\cr
-Date: \tab 2011-02-14\cr
+Version: \tab 2011.07.25\cr
+Date: \tab 2011-07-25\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 Depends: \tab hglm, dglm\cr
@@ -21,10 +20,10 @@ Depends: \tab hglm, dglm\cr
 \author{
 Xia Shen
 
-Maintainer: Xia Shen <xia.shen@lcb.uu.se>
+Maintainer: Xia Shen <xia.shen@icm.uu.se>
 }
 \references{
-Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Variance Controlling Genes: Significant Contributors to The Missing Genetic Variation for Complex Traits}. \emph{Submitted}.\cr
+Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Inheritance beyond plain heritability: variance-controlling genes in \emph{Arabidopsis thaliana}}. \emph{Submitted}.\cr
 
 Ronnegard, L., Shen, X. and Alam, M. (2011): \bold{hglm: A Package for Fitting Hierarchical Generalized Linear Models}. \emph{The R Journal}, \bold{2}(2), 20-28.\cr
 

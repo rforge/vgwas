@@ -4,7 +4,7 @@ function(y, group, kruskal.test = FALSE)
  # ----- stop the code if the length of y does not match the length of group ----- #
  if (length(y) != length(group))
  {
-  stop("The length of the data does not match the length of the group.")
+  stop('The length of the data does not match the length of the group.')
  }
  # ----- assign stuffs ----- #
  DNAME <- deparse(substitute(y))
@@ -18,7 +18,7 @@ function(y, group, kruskal.test = FALSE)
  group <- as.factor(group) # precautionary
  # ----- define the measure of central tendency (median) ----- # 
  means <- tapply(y, group, median)
- METHOD <- "Brown-Forsythe test based on the absolute deviations from the median"
+ METHOD <- 'Brown-Forsythe test based on the absolute deviations from the median'
  # ----- calculate the sample size of each group and absolute deviation from center ----- #  
  n <- tapply(y, group, length)
  resp.mean <- abs(y - means[group])
@@ -34,15 +34,15 @@ function(y, group, kruskal.test = FALSE)
  # ----- if the Kruskal-Wallis test is used ----- #
  else
  {
-  METHOD <- paste("Rank-based (Kruskal-Wallis)", METHOD)
+  METHOD <- paste('Rank-based (Kruskal-Wallis)', METHOD)
   ktest <- kruskal.test(resp.mean,d)
   statistic <- ktest$statistic
   p.value <- ktest$p.value
  } 
  # ----- display output ----- #
  STATISTIC <- statistic
- names(STATISTIC) = "Test Statistic" 
- structure(list(statistic = STATISTIC, p.value = p.value, method = METHOD, data.name = DNAME), class = "htest")
+ names(STATISTIC) = 'Test Statistic' 
+ structure(list(statistic = STATISTIC, p.value = p.value, method = METHOD, data.name = DNAME), class = 'htest')
 }
 
 
@@ -50,7 +50,7 @@ function(y, group, kruskal.test = FALSE)
 
 
 `vGWAS` <-
-function(phenotype, geno.matrix, heva = FALSE, kinship = NULL, kruskal.test = FALSE, marker.map = NULL, chr.index = NULL)
+function(phenotype, geno.matrix, kruskal.test = FALSE, marker.map = NULL, chr.index = NULL)
 {
  Call <- match.call()
  # ----- check phenotype ----- #
@@ -58,13 +58,13 @@ function(phenotype, geno.matrix, heva = FALSE, kinship = NULL, kruskal.test = FA
  {
   stop('phenotype has to be numeric or logical.')
  }
- if (heva) 
- {
-  cat('correcting phenotype using HEVA ...\n')
-  if (is.numeric(phenotype)) family <- gaussian() else family <- binomial()
-  phenotype <- vGWAS.heva(phenotype, geno.matrix, kinship, family = family)$corrected.phenotype
-  cat('phenotype corrected.\n')
- }
+ #if (heva) 
+ #{
+ # cat('correcting phenotype using HEVA ...\n')
+ # if (is.numeric(phenotype)) family <- gaussian() else family <- binomial()
+ # phenotype <- vGWAS.heva(phenotype, geno.matrix, kinship, family = family)$corrected.phenotype
+ # cat('phenotype corrected.\n')
+ #}
  n <- length(phenotype)
  m <- ncol(geno.matrix)
  # ----- check genotypes ----- #
@@ -109,7 +109,11 @@ function(phenotype, geno.matrix, heva = FALSE, kinship = NULL, kruskal.test = FA
  # ----- scan using Brown-Forsythe test -----#
  for (j in 1:m)
  {
-  test <- try(brown.forsythe.test(phenotype, as.factor(geno.matrix[,j]), kruskal.test = kruskal.test), silent  = TRUE)
+#  if (!heva) {
+   test <- try(brown.forsythe.test(phenotype, as.factor(geno.matrix[,j]), kruskal.test = kruskal.test), silent  = TRUE)
+#  } else {
+#   test <- try(wilcox.test(phenotype ~ as.factor(geno.matrix[,j])), silent  = TRUE)
+#  }
   if (!inherits(test, 'try-error'))
   {
    p.values[j] <- test$p.value
@@ -133,72 +137,39 @@ function(phenotype, geno.matrix, heva = FALSE, kinship = NULL, kruskal.test = FA
 
 
 
-`vGWAS.heva` <-
-function(phenotype, geno.matrix = NULL, kinship = NULL, family = gaussian())
+
+vGWAS.gc <- function(object, plot = TRUE, proportion = 1, ...) 
 {
- n <- length(phenotype)
- if (is.null(geno.matrix) & is.null(kinship)) 
- {
-  stop('at least one of geno.matrix or kinship has to be given.')
- }
- # ----- check phenotype ----- #
- if (!is.numeric(phenotype) & !is.logical(phenotype))
- {
-  stop('phenotype has to be numeric or logical.')
- }
- # ----- check genotypes or kinship ----- #
- if (is.null(kinship)) 
- {
-  if (!is.matrix(geno.matrix) & !is.data.frame(geno.matrix))
-  {
-   stop('geno.matrix has to be a matrix or a data frame.')
-  }
- }
- else
- {
-  if (!is.matrix(kinship))
-  {
-   stop('kinship has to be a matrix.')
-  }
- }
- # ----- check if data sizes match ----- #
- if (is.null(kinship)) 
- {
-  if (n != nrow(geno.matrix))
-  {
-   stop('size of phenotype and geno.matrix do not match.')
-  }
- }
- else 
- {
-  if (n != nrow(kinship))
-  {
-   stop('size of phenotype and kinship do not match.')
-  }
- }
- if (is.null(kinship)) 
- {
-  cat('creating genomic kinship ... ')
-  G <- tcrossprod(geno.matrix)
-  cat('done.\n')
- }
- else 
- {
-  G <- kinship
- }
- if (sum(is.na(phenotype)) > 0)
- {
-  naidx <- which(is.na(phenotype))
-  phenotype <- phenotype[-naidx]
-  G <- G[-naidx,-naidx]
- }
- pc <- eigen(G)$vectors
- plot(pc[,1], pc[,2], xlab = '1st Principle Component', ylab = '2nd Principle Component', pch = 16, cex = .84, col = 'DarkBlue')
- cat('an HGLM is being fitted ... ')
- L <- t(chol(G))
- hm <- hglm(y = phenotype, X = matrix(1, length(phenotype), 1), Z = L, family = family)
- cat('done.\n')
- return(list(corrected.phenotype = hm$resid))
+    if (proportion > 1 || proportion <= 0) 
+        stop('proportion argument should be greater then zero and less than or equal to one.')
+    ntp <- round(proportion * length(object$p.value))
+    if (ntp <= 1) 
+        stop('too few valid measurments.')
+    if (ntp < 10) 
+        warning(paste('number of points is fairly small:', ntp))
+    if (min(object$p.value) < 0) 
+        stop('data argument has values <0')
+    if (max(object$p.value) <= 1) {
+        data <- data0 <- qchisq(object$p.value, 1, lower.tail = FALSE)
+    }
+    data <- sort(data)
+    ppoi <- ppoints(data)
+    ppoi <- sort(qchisq(1 - ppoi, 1))
+    data <- data[1:ntp]
+    ppoi <- ppoi[1:ntp]
+    s <- summary(lm(data ~ 0 + ppoi))$coeff
+    out <- object
+    out$lambda <- s[1, 1]
+    out$lambda.se <- s[1, 2]
+    if (plot) {
+        lim <- c(0, max(data, ppoi, na.rm = TRUE))
+        plot(ppoi, data, xlab = expression('Expected'~chi^2), ylab = expression('Observed'~chi^2), ...)
+        abline(a = 0, b = 1, col = 4, lwd = 2.4)
+        if (out$lambda > 1) co <- 2 else co <- 3
+        abline(a = 0, b = (s[1, 1]), col = co, lwd = 2.4)
+    }
+    out$p.value <- pchisq(data0/out$lambda, 1, lower.tail = FALSE)
+    return(out)
 }
 
 
@@ -254,7 +225,7 @@ function(x, sig.threshold = NULL, low.log.p = 0, pch = 16, cex = .6, col.manhatt
 
 
 `vGWAS.variance` <-
-function(phenotype, marker.genotype, only.print = TRUE)
+function(phenotype, marker.genotype, print = TRUE)
 {
  # ----- check phenotype ----- #
  if (!is.numeric(phenotype))
@@ -272,17 +243,45 @@ function(phenotype, marker.genotype, only.print = TRUE)
   stop('size of phenotype and marker genotype do not match.')
  }
  dm <- dglm(phenotype ~ as.factor(marker.genotype), ~ as.factor(marker.genotype))
- heritability.mean <- (dm$null.deviance - dm$deviance)/dm$null.deviance
- heritability.disp <- (dm$dispersion.fit$null.deviance - dm$dispersion.fit$deviance)/dm$dispersion.fit$null.deviance
- cat('variance explained by the mean part of model:\n')
- cat(round(heritability.mean*100, digits = 2), '%\n')
- cat('variance explained by the variance part of model:\n')
- cat(round(heritability.disp*100, digits = 2), '%\n')
- cat('variance explained in total:\n')
- cat(round((heritability.mean + heritability.disp)*100, digits = 2), '%\n')
- if (!only.print) return(list(variance.mean = heritability.mean, variance.disp = heritability.disp))
+ df.fd <- length(levels(as.factor(marker.genotype))) - 1
+ p.mean = summary(dm)$coef[2,4]
+ fd <- '~ 1'   
+ fd <- parse(text = fd)
+ mode(fd) <- 'call'
+ lik <- rep(dm$m2loglik, 2)
+ names(lik) <- c('Mean', 'Full')
+ ncall <- dm$call
+ ncall['dformula'] <- fd
+ lik['Mean'] <- eval(ncall)$m2loglik
+ LRT = as.numeric(lik['Mean'] - lik['Full'])
+ p.disp = pchisq(LRT, df.fd, lower.tail = FALSE) ###
+ #heritability.mean <- (dm$null.deviance - dm$deviance)/dm$null.deviance
+ #heritability.disp0 <- (dm$dispersion.fit$null.deviance - dm$dispersion.fit$deviance)/dm$dispersion.fit$null.deviance
+ #heritability.disp <- heritability.disp0*(1 - heritability.mean)
+ tab <- table(marker.genotype)
+ genos <- names(tab)
+ if (length(genos) != 2) stop('Incorrect number of genotypes for calculating variance explained.')
+ y1 <- phenotype[marker.genotype == genos[1]]
+ y2 <- phenotype[marker.genotype == genos[2]]
+ mu1 <- mean(y1)
+ mu2 <- mean(y2)
+ s1 <- sd(y1)
+ s2 <- sd(y2)
+ p <- tab[1]/length(phenotype)
+ vp <- p*s1**2 + (1 - p)*s2**2 + p*(1 - p)*(mu1 - mu2)**2
+ vm <- p*(1 - p)*(mu1 - mu2)**2/vp
+ vv <- p*(1 - p)*(s1 - s2)**2/vp
+ ve <- (p*s1 + (1 - p)*s2)**2/vp
+ if (print) {
+  cat('variance explained by the mean part of model:\n')
+  cat(round(vm*100, digits = 2), '%, p-value =', p.mean, '\n')
+  cat('variance explained by the variance part of model:\n')
+  cat(round(vv*100, digits = 2), '%, p-value =', p.disp, '\n')
+  cat('variance explained in total:\n')
+  cat(round((vm + vv)*100, digits = 2), '%\n')
+ }
+ return(list(variance.mean = vm, variance.disp = vv, p.mean = p.mean, p.variance = p.disp, LRT.statistic.variance = LRT, df.variance = df.fd))
 }
-
 
 
 
@@ -291,7 +290,7 @@ function(phenotype, marker.genotype, only.print = TRUE)
 .onAttach <- 
 function(...)
 {
- cat("vGWAS: Variance Genome-wide Association\n")
- cat('Version 2011.02.14 installed\n')
- cat('Correspondence to: Xia Shen (xia.shen@lcb.uu.se)\n')
+ cat('vGWAS: Variance Genome-wide Association\n')
+ cat('Version 2011.07.01 installed\n')
+ cat('Correspondence to: Xia Shen (xia.shen@icm.uu.se)\n')
 }

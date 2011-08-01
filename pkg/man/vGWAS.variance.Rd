@@ -7,7 +7,7 @@ Calculating Variance Explained by A Single Marker
 The function calculates and reports the variance explained for a single marker by fitting a double generalized linear model. It gives both the variance explained by the mean and variance parts of model.
 }
 \usage{
-vGWAS.variance(phenotype, marker.genotype, only.print = TRUE)
+vGWAS.variance(phenotype, marker.genotype, print = TRUE)
 }
 \arguments{
   \item{phenotype}{
@@ -16,7 +16,7 @@ a \code{numeric} vector of the phenotyic values. See \bold{Examples}.
   \item{marker.genotype}{
 a \code{numeric} or \code{character} or \code{factor} vector of the genotypes of a single marker. See \bold{Examples}.
 }
-  \item{only.print}{
+  \item{print}{
 a \code{logical} value. If \code{FALSE}, the heritability values will be returned for storage.
 }
 }
@@ -28,7 +28,7 @@ The \bold{Value} will only be available if \code{only.print = FALSE}.
 \item{variance.disp}{the variance explained by the variance part of model.}
 }
 \references{
-Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Variance Controlling Genes: Significant Contributors to The Missing Genetic Variation for Complex Traits}. \emph{Submitted}.
+Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Inheritance beyond plain heritability: variance-controlling genes in \emph{Arabidopsis thaliana}}. \emph{Submitted}.\cr
 }
 \author{
 Xia Shen

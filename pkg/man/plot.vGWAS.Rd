@@ -41,7 +41,7 @@ not used.
 a plot for viewing vGWAS result.
 }
 \references{
-Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Variance Controlling Genes: Significant Contributors to The Missing Genetic Variation for Complex Traits}. \emph{Submitted}.
+Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Inheritance beyond plain heritability: variance-controlling genes in \emph{Arabidopsis thaliana}}. \emph{Submitted}.\cr
 }
 \author{
 Xia Shen
@@ -73,11 +73,10 @@ plot(vgwa)
 vGWAS.heritability(phenotype = pheno, 
                    marker.genotype = geno[,vgwa$p.value == min(vgwa$p.value)])
                    
-# ----- vGWAS via HEVA ----- #
- 
-vgwa2 <- vGWAS(phenotype = pheno, geno.matrix = geno, heva = TRUE,
-              marker.map = map, chr.index = chr)
-              
+# ----- genomic control ----- #
+
+vgwa2 <- vGWAS.gc(vgwa)
+                                
 plot(vgwa2) 
 }
 }
