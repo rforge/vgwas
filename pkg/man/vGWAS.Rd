@@ -33,7 +33,7 @@ a \code{data.frame} containing columns of \code{marker} names, \code{chromosome}
 \references{
 Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Inheritance beyond plain heritability: variance-controlling genes in \emph{Arabidopsis thaliana}}. \emph{Submitted}.\cr
 
-Ronnegard, L., Shen, X. and Alam, M. (2011): \bold{hglm: A Package for Fitting Hierarchical Generalized Linear Models}. \emph{The R Journal}, \bold{2}(2), 20-28.\cr
+Ronnegard, L., Shen, X. and Alam, M. (2010): \bold{hglm: A Package for Fitting Hierarchical Generalized Linear Models}. \emph{The R Journal}, \bold{2}(2), 20-28.\cr
 }
 \author{
 Xia Shen

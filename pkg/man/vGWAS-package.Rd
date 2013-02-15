@@ -2,16 +2,16 @@
 \alias{vGWAS-package}
 \docType{package}
 \title{
-Variance Genome-wide Association
+Variance Heterogeneity Genome-wide Association Study
 }
 \description{
-The package provides models and tests for variance genome-wide association study (vGWAS).
+The package provides models and tests for variance heterogeneity genome-wide association study (vGWAS).
 }
 \details{\tabular{ll}{
 Package: \tab vGWAS\cr
 Type: \tab Package\cr
-Version: \tab 2011.07.25\cr
-Date: \tab 2011-07-25\cr
+Version: \tab 2013.02.15\cr
+Date: \tab 2013-02-15\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 Depends: \tab hglm, dglm\cr
@@ -20,7 +20,7 @@ Depends: \tab hglm, dglm\cr
 \author{
 Xia Shen
 
-Maintainer: Xia Shen <xia.shen@icm.uu.se>
+Maintainer: Xia Shen <xia.shen@slu.se>
 }
 \references{
 Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Inheritance beyond plain heritability: variance-controlling genes in \emph{Arabidopsis thaliana}}. \emph{Submitted}.\cr
