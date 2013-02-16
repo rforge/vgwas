@@ -293,7 +293,7 @@ vGWAS.gc <- function(object, plot = TRUE, proportion = 1, ...)
 .onAttach <- 
 		function(...)
 {
-	cat('vGWAS: Variance Genome-wide Association\n')
-	cat('Version 2011.11.01 installed\n')
-	cat('Correspondence to: Xia Shen (xia.shen@icm.uu.se)\n')
+	packageStartupMessage('vGWAS: Variance Genome-wide Association')
+	packageStartupMessage('Version 2013.02.15 installed')
+	packageStartupMessage('Correspondence to: Xia Shen (xia.shen@slu.se)')
 }
