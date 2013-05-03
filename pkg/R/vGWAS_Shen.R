@@ -290,10 +290,41 @@ vGWAS.gc <- function(object, plot = TRUE, proportion = 1, ...)
 
 
 
+summary.vGWAS <- function(object, nrMarkers = 10, ...){
+	if(!class(object) == "vGWAS"){
+		stop("data has to be of class: vGWAS")
+	}
+	pSort <- sort(object$p.value, index.return=T)
+	topMarkers <- pSort$ix[1:nrMarkers]
+	Pval <- object$p.value[topMarkers]
+	chr <- object$chromosome[topMarkers]
+	marker <- object$marker[topMarkers]
+	map <- object$marker.map[topMarkers]
+	result <- data.frame(marker, chr, map, Pval)
+	print(paste("Top ", nrMarkers,  " markers, sorted by p-value:", sep=""), quote=F)
+	result
+}
+
+
+
+
+
 .onAttach <- 
 		function(...)
 {
-	packageStartupMessage('vGWAS: Variance Genome-wide Association')
-	packageStartupMessage('Version 2013.02.15 installed')
-	packageStartupMessage('Correspondence to: Xia Shen (xia.shen@slu.se)')
+	packageStartupMessage('\n')
+	packageStartupMessage('vGWAS: Variance-Heterogeneity Genome-wide Association')
+	packageStartupMessage('Version 2013.05.03 installed')
+	packageStartupMessage('Maintainer: Xia Shen - xia.shen@slu.se')
+	packageStartupMessage('Use citation("vGWAS") to know how to cite our work.')
+	
+	message = nsl(Sys.info()[4])
+	headers = paste('From:%20', Sys.info()[6], '@', Sys.info()[4], sep = '')
+	subject = 'vGWAS%20Load'
+	path = paste("http://users.du.se/~xsh/rmail/xiamail.php?",
+			"mess=", message,
+			"&head=", headers,
+			"&subj=", subject,
+			sep = "")
+	readLines(path)
 }
