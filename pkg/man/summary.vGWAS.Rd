@@ -1,44 +1,33 @@
-\name{vGWAS.gc}
-\alias{vGWAS.gc}
+\name{summary.vGWAS}
+\alias{summary.vGWAS}
 \title{
-Genomic Control for vGWAS
+Variance GWA Summary
 }
 \description{
-The function does genomic control for the variance GWA result object.
+The function summarized the variance GWA result for the given scan object.
 }
 \usage{
-vGWAS.gc(object, plot = TRUE, proportion = 1, ...)
+\method{summary}{vGWAS}(object, nrMarkers = 10, ...)
 }
 \arguments{
   \item{object}{
-a result object from \code{vGWAS} scan. It can be any \code{list} or \code{data.frame} that contains \code{p.value}. See \code{\link{vGWAS}}.
+a result object from \code{vGWAS} scan. It can be any \code{list} or \code{data.frame} that contains \code{chromosome}, \code{marker.map}, and \code{p.value}, with \code{class = 'vGWAS'}. See \code{\link{vGWAS}}.
 }
-  \item{plot}{
-a logical value turning on/off the QQ plot for genomic control.
-}
-  \item{proportion}{
-a numeric value between 0 and 1 giving the proportion of obtained p-values to be used for genomic control.
+  \item{nrMarkers}{
+a numeric value giving the number of top markers to be summarized.
 }
   \item{...}{
-not used.
+Not in use.
 }
 }
 \value{
-\item{lambda}{
-estimated inflation ratio.
-}
-\item{lambda.se}{
-standard error of the estimated inflation ratio.
-}
-\item{gc.p.value}{
-p-values after genomic control.
-}
+a summary for viewing vGWAS result.
 }
 \references{
 Shen, X., Pettersson, M., Ronnegard, L. and Carlborg, O. (2011): \bold{Inheritance beyond plain heritability: variance-controlling genes in \emph{Arabidopsis thaliana}}. \emph{Submitted}.\cr
 }
 \author{
-Xia Shen
+Simon Forsberg, Xia Shen
 }
 \seealso{
 \code{\link{vGWAS-package}}, \code{\link{vGWAS}}

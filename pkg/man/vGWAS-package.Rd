@@ -10,8 +10,8 @@ The package provides models and tests for variance heterogeneity genome-wide ass
 \details{\tabular{ll}{
 Package: \tab vGWAS\cr
 Type: \tab Package\cr
-Version: \tab 2013.02.15\cr
-Date: \tab 2013-02-15\cr
+Version: \tab 2013.05.03\cr
+Date: \tab 2013-05-03\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 Depends: \tab hglm, dglm\cr

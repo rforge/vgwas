@@ -60,15 +60,19 @@ vgwa <- vGWAS(phenotype = pheno, geno.matrix = geno,
 
 plot(vgwa)
 
+summary(vgwa)
+
 # ----- calculate the variance explained by strongest the marker ----- #
 
-vGWAS.variance(phenotype = pheno, 
+vGWAS.heritability(phenotype = pheno, 
                    marker.genotype = geno[,vgwa$p.value == min(vgwa$p.value)])
-
+                   
 # ----- genomic control ----- #
 
 vgwa2 <- vGWAS.gc(vgwa)
                                 
 plot(vgwa2) 
+
+summary(vgwa2)
 }
 }

@@ -4,7 +4,7 @@
 Variance GWA Manhattan Plot
 }
 \description{
-The function plots the variance GWA result for the giving scan object.
+The function plots the variance GWA result for the given scan object.
 }
 \usage{
 \method{plot}{vGWAS}(x, sig.threshold = NULL, low.log.p = 0, pch = 16, 
@@ -68,6 +68,8 @@ vgwa <- vGWAS(phenotype = pheno, geno.matrix = geno,
 
 plot(vgwa)
 
+summary(vgwa)
+
 # ----- calculate the variance explained by strongest the marker ----- #
 
 vGWAS.heritability(phenotype = pheno, 
@@ -78,5 +80,7 @@ vGWAS.heritability(phenotype = pheno,
 vgwa2 <- vGWAS.gc(vgwa)
                                 
 plot(vgwa2) 
+
+summary(vgwa2)
 }
 }
