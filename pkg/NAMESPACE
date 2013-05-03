@@ -1,3 +1,5 @@
-export("vGWAS","plot.vGWAS","vGWAS.variance","vGWAS.gc","brown.forsythe.test")
+import("utils")
+export("vGWAS","plot.vGWAS","summary.vGWAS","vGWAS.variance","vGWAS.gc","brown.forsythe.test")
 
 S3method(plot,vGWAS)
+S3method(summary,vGWAS)

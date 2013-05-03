@@ -1,10 +1,11 @@
 Package: vGWAS
 Type: Package
 Title: Variance Heterogeneity Genome-Wide Association Study
-Version: 2013.02.15
-Date: 2013-02-15
+Version: 2013.05.03
+Date: 2013-05-03
 Author: Xia Shen
 Maintainer: Xia Shen <xia.shen@slu.se>
 Description: The package provides models and tests for variance heterogeneity genome-wide association study (vGWAS). 
+Depends: R (>= 2.10), utils
 License: GPL
 LazyLoad: yes
