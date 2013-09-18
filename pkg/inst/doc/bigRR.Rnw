@@ -1,0 +1,16 @@
+% $Id: bigRR.Rnw $
+
+%\VignetteIndexEntry{The bigRR Package}
+%\VignetteKeywords{bigRR}
+%\VignettePackage{bigRR}
+
+\documentclass{article}
+
+\usepackage{pdfpages}
+
+\begin{document}
+
+\includepdf[pages={1-5}, fitpaper=true]{tutorial.pdf}
+
+\end{document}
+
