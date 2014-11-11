@@ -315,7 +315,7 @@ summary.vGWAS <- function(object, nrMarkers = 10, ...){
 	packageStartupMessage('\n')
 	packageStartupMessage('vGWAS: Variance-Heterogeneity Genome-wide Association')
 	packageStartupMessage('Version 2013.05.03 installed')
-	packageStartupMessage('Maintainer: Xia Shen - xia.shen@slu.se')
+	packageStartupMessage('Maintainer: Xia Shen - xia.shen@ki.se')
 	packageStartupMessage('Use citation("vGWAS") to know how to cite our work.')
 	
 	sysInfo <- Sys.info()
