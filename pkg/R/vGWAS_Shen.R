@@ -312,24 +312,16 @@ summary.vGWAS <- function(object, nrMarkers = 10, ...){
 .onAttach <- 
 		function(...)
 {
-	packageStartupMessage('\n')
-	packageStartupMessage('vGWAS: Variance-Heterogeneity Genome-wide Association')
-	packageStartupMessage('Version 2013.05.03 installed')
-	packageStartupMessage('Maintainer: Xia Shen - xia.shen@ki.se')
-	packageStartupMessage('Use citation("vGWAS") to know how to cite our work.')
-	
-	sysInfo <- Sys.info()
-	sysInfo <- paste(names(sysInfo), as.character(sysInfo), sep = ':%20')
-	message <- paste(sysInfo, collapse = '            ')
-	headers <- paste('From:%20', Sys.info()[6], '@', Sys.info()[4], sep = '')
-	subject <- 'vGWAS%20Load'
-	path <- paste("http://users.du.se/~xsh/rmail/xiamail.php?",
-			"mess=", message,
-			"&head=", headers,
-			"&subj=", subject,
-			sep = "")
-	unlist(strsplit(path, '')) -> pathsplit
-	pathsplit[pathsplit == ' '] <- '%20'
-	path <- paste(pathsplit, collapse = '')
-	try(readLines(path), silent = TRUE)
+	pkgDescription <- packageDescription(pkg)
+	pkgVersion <- pkgDescription$Version
+	pkgDate <- pkgDescription$Date
+	pkgName <- pkgDescription$Package
+	pkgTitle <- pkgDescription$Title
+	pkgAuthor <- pkgDescription$Author
+	pkgMaintainer <- pkgDescription$Maintainer
+	packageStartupMessage(paste("\n", pkgName, ": ", pkgTitle, sep = ""))
+	packageStartupMessage(paste("Version ", pkgVersion, " (", pkgDate, ") installed", sep = ""))
+	packageStartupMessage(paste("Authors: ", pkgAuthor, sep = ""))
+	packageStartupMessage(paste("Maintainer: ", pkgMaintainer, "\n", sep = ""))
+	packageStartupMessage('Use citation("vGWAS") to know how to cite our work.\n')
 }
