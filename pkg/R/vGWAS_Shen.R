@@ -310,7 +310,7 @@ summary.vGWAS <- function(object, nrMarkers = 10, ...){
 
 
 .onAttach <- 
-		function(...)
+		function(lib, pkg, ...)
 {
 	pkgDescription <- packageDescription(pkg)
 	pkgVersion <- pkgDescription$Version
